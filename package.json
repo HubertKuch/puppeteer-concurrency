@@ -1,0 +1,31 @@
+{
+  "name": "puppeteer-concurrency",
+  "version": "1.0.0",
+  "description": "Run many browsers in pararell, register errors and monitor ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/HubertKuch/puppeteer-concurrency.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "pararell",
+    "concurrency",
+    "async",
+    "browser",
+    "web",
+    "web-driver"
+  ],
+  "author": "Hubert Kuch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HubertKuch/puppeteer-concurrency/issues"
+  },
+  "homepage": "https://github.com/HubertKuch/puppeteer-concurrency#readme",
+  "devDependencies": {
+    "puppeteer": "^21.4.1"
+  }
+}
