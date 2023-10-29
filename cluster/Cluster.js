@@ -2,6 +2,9 @@ import { Worker } from "worker_threads";
 import generateWorkerCode from "../workers/browser_worker.js";
 import os from 'os';
 import {createLogUpdate} from 'log-update';
+import {Chalk} from 'chalk';
+
+const chalk = new Chalk({level: 1});
 
 export default class Cluster {
   pids = [];
@@ -41,11 +44,12 @@ export default class Cluster {
 
         const percentOfDonePages = parseInt((state.donePages * 100) / state.of);
         const percentOfErrors = parseInt((state.errors * 100) / state.donePages);
+        
+        const errorInfo = `(${state.errors} errors - ${isNaN(percentOfErrors) ? 0 : percentOfErrors}% of done page)`; 
 
         update(`
 Ram usage => ${memUsageInMb}MB / ${memTotalInMb}MB
-Scraped pages => ${state.donePages} of ${state.of} what is ${percentOfDonePages}% (${state.errors} errors - ${isNaN(percentOfErrors) ? 0 : percentOfErrors}% of done pages)
-`);
+Scraped pages => ${state.donePages} of ${state.of} what is ${percentOfDonePages === 100 ? chalk.green(`${percentOfDonePages}`) : percentOfDonePages}% ${chalk.red(errorInfo)}`);
 
       if (state.donePages === state.of) {
           clearInterval(this)
