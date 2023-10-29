@@ -1,4 +1,4 @@
-const Cluster = require('../index');
+import Cluster from '../index.js';
 
 const cluster = new Cluster({
   puppeteer: 'puppeteer',
@@ -15,7 +15,6 @@ const cluster = new Cluster({
 
     await page.waitForSelector("#main section a[target=_self][href*=\"/package\"]");
     const text = await page.$$eval("#main section a[target=_self][href*=\"/package\"]", nodes => nodes.map(n => n.innerText.trim()));
-
-    console.log(text);
-  }
+  },
+  monitor: true
 });

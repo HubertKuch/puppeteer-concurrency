@@ -1,3 +1,3 @@
-const Cluster = require('./cluster/Cluster');
+import Cluster from './cluster/Cluster.js';
 
-module.exports = Cluster;
+export default Cluster;

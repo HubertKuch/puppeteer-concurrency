@@ -6,20 +6,24 @@ function generateWorkerCode(task) {
 
     const browser = await puppeteer.launch(workerData.options);
 
+    parentPort.postMessage({ pid: browser.process().pid })
+
     try {
       const page = await browser.newPage();
 
       for (const url of workerData.urls) {
-        await (${task.toString()})(page, url);
+        await (${task.toString()})(page, url)
+        
+parentPort.postMessage({ done: true });
       }
     } catch(error) {
       console.error(error)
-      // parentPort.postMessage({ error });
+      parentPort.postMessage({ error });
     } finally {
       await browser.close();
     }
   })()`;
 }
 
-module.exports = generateWorkerCode;
+export default generateWorkerCode;
 

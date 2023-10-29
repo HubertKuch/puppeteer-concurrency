@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/HubertKuch/puppeteer-concurrency.git"
@@ -27,5 +28,8 @@
   "homepage": "https://github.com/HubertKuch/puppeteer-concurrency#readme",
   "devDependencies": {
     "puppeteer": "^21.4.1"
+  },
+  "dependencies": {
+    "log-update": "^6.0.0"
   }
 }
