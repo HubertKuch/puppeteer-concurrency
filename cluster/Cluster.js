@@ -16,9 +16,13 @@ export default class Cluster {
   };
 
   /**
-   * @param {{ urlChunks: String[], puppeteer: String, puppeteerOptions, task, monitor: Boolean }} options
+   * @param {{ urlChunks: String[], puppeteer: String, puppeteerOptions, task, monitor?: Boolean, puppeteerMiddleware? }} options
    **/
   constructor(options) {
+    if (!options.puppeteerMiddleware) {
+      options.puppeteerMiddleware = () => {};
+    }
+
     this.options = options;
     const allPages = options.urlChunks.flat().length;
 
@@ -62,7 +66,7 @@ Scraped pages => ${state.donePages} of ${state.of} what is ${percentOfDonePages 
   initializeWorkers() {
     this.workers = this.options.urlChunks.map((chunk) => {
       const worker = new Worker(
-        generateWorkerCode(this.options.task),
+        generateWorkerCode(this.options.task, this.options.puppeteerMiddleware),
         {
           workerData: {
             puppeteer: this.options.puppeteer,
