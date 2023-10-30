@@ -10,11 +10,25 @@ const cluster = new Cluster({
   puppeteerOptions: {
     headless: 'new'
   },
-  task: async (page, url) => {
-    await page.goto(url);
+  modules: [
+    {
+      alias: 'mocha',
+      path: 'mocha'
+    }
+  ],
+  task: async (page, url, modules) => {
+    const describe = modules['mocha'].describe;
 
-    await page.waitForSelector("#main section a[target=_self][href*=\"/package\"]");
-    const text = await page.$$eval("#main section a[target=_self][href*=\"/package\"]", nodes => nodes.map(n => n.innerText.trim()));
+    // describe("NPM searches", async () => {
+    //   it("Should return not-empty array of strings", async () => {
+    //     await page.goto(url);
+    //
+    //     await page.waitForSelector("#main section a[target=_self][href*=\"/package\"]");
+    //     const text = await page.$$eval("#main section a[target=_self][href*=\"/package\"]", nodes => nodes.map(n => n.innerText.trim()));
+    //
+    //     console.log(text);
+    //   });
+    // });
   },
-  monitor: true
+  monitor: false
 });
