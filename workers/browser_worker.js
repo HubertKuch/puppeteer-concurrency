@@ -1,5 +1,5 @@
 function generateWorkerCode(task, middleware, modules) {
-  return `(async () => {
+  const code = `(async () => {
     const { kill } = require('process');
     const { workerData, parentPort } = require('worker_threads');
     const { default: puppeteer } = require(workerData.puppeteer);
@@ -9,8 +9,8 @@ function generateWorkerCode(task, middleware, modules) {
       const modules = {};
       
       for (const mod of mods) {
-        const modPath = path.isAbsolute(mod.path) ? 'files://' + mod.path : mod.path;
-        modules[mod.alias] = (await import(modPath)).default;
+        const modPath = path.isAbsolute(mod.path) ? 'file://' + mod.path : mod.path;
+        modules[mod.alias] = (await import(modPath));
       }
       
       return modules;
@@ -39,6 +39,8 @@ parentPort.postMessage({ done: true });
       await browser.close();
     }
   })()`;
+
+  return code;
 }
 
 export default generateWorkerCode;
