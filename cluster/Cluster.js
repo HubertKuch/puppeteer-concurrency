@@ -88,6 +88,7 @@ Scraped pages => ${state.donePages} of ${state.of} what is ${percentOfDonePages 
       worker.on('message', data => {
         if (data.error) {
           console.error(data.error);
+          this.state.errors = this.state.errors + 1;
         }
 
         if (data.pid) {

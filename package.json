@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-concurrency",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Run many browsers in pararell, register errors and monitor ",
   "main": "index.js",
   "scripts": {

@@ -26,11 +26,19 @@ function generateWorkerCode(task, middleware, modules) {
 
     try {
       const page = await browser.newPage();
+    
+      page.on('error', error => {
+        parentPort.postMessage({ error })
+      });
 
       for (const url of workerData.urls) {
-        await (${task.toString()})(page, url, modules)
+        try {
+          await (${task.toString()})(page, url, modules);
+        } catch(error) {
+          parentPort.postMessage({ error });
+        }
         
-parentPort.postMessage({ done: true });
+        parentPort.postMessage({ done: true });
       }
     } catch(error) {
       console.error(error)
